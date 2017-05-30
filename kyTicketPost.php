@@ -725,19 +725,18 @@ class kyTicketPost extends kyObjectBase {
 	public function getAttachments($reload = false) {
 		if ($this->attachments === null || $reload) {
 			$this->attachments = array();
-
-			if ($this->has_attachments) {
-				/*
-				 * Need to get all attachments, and then filter by post identifier.
-				 */
-				$attachments = kyTicketAttachment::getAll($this->ticket_id);
-				foreach ($attachments as $attachment) {
-					/* @var $attachment kyTicketAttachment */
-					if ($attachment->getTicketPostId() === $this->id) {
-						$this->attachments[] = $attachment;
-					}
+			/*
+			 * Need to get all attachments, and then filter by post identifier.
+			 */
+			$attachments = kyTicketAttachment::getAll($this->ticket_id);
+			foreach ($attachments as $attachment) {
+				/* @var $attachment kyTicketAttachment */
+				if ($attachment->getTicketPostId() === $this->id) {
+					$this->attachments[] = $attachment;
 				}
 			}
+			
+			$this->has_attachments = !!count($this->attachments);
 		}
 		/** @noinspection PhpParamsInspection */
 		return new kyResultSet($this->attachments);
