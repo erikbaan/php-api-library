@@ -712,7 +712,7 @@ class kyTicket extends kyObjectWithCustomFieldsBase {
 		else
 			$search_parameters[] = '-1';
 
-		if (is_numeric($starting_ticket_id) && $starting_ticket_id > 0) {
+		if (is_numeric($starting_ticket_id) && !is_null($starting_ticket_id)) {
 			if (!is_numeric($max_items) || $max_items <= 0) {
 				$max_items = 1000;
 			}
